@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const db = require("./config/database.js");
 const app = express();
 const Books = require("./models/Books");
+const methodOverride = require("method-override");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -15,6 +16,8 @@ db.authenticate()
 app.set("view engine", "pug");
 
 app.use(express.static("public"));
+
+app.use(methodOverride("_method"));
 
 app.get("/", (req, res) => {
   res.redirect("/books");
@@ -55,7 +58,7 @@ app.get("/books/:id", (req, res) =>
 //perform update
 app.put("/books/:id", (req, res) => {
   Books.update({ title: req.body.title }, { where: { _id: req.params.id } })
-    .then(() => res.redirect("/books"))
+    .then(() => res.redirect("/books/" + req.params.id))
     .catch(err => console.log(err));
 });
 
