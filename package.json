@@ -1,0 +1,31 @@
+{
+  "name": "td-project-10",
+  "version": "1.0.0",
+  "description": "a tech degree project",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AllenLiu7/td-project-10.git"
+  },
+  "author": "Allen Liu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AllenLiu7/td-project-10/issues"
+  },
+  "homepage": "https://github.com/AllenLiu7/td-project-10#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "pug": "^2.0.3",
+    "sequelize": "^5.1.0",
+    "sequelize-cli": "^5.4.0",
+    "sqlite3": "^4.0.6"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
