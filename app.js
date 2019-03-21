@@ -56,10 +56,11 @@ app.get("/books/:id", (req, res) =>
 );
 
 //perform update
-app.put("/books/:id", (req, res) => {
-  Books.update({ title: req.body.title }, { where: { _id: req.params.id } })
-    .then(() => res.redirect("/books/" + req.params.id))
-    .catch(err => console.log(err));
+app.put("/books/:id", function(req, res, next) {
+  Books.findByPk(req.params.id).then(function(books) {
+    return books.update(req.body);
+  });
+  res.redirect("/books/");
 });
 
 const PORT = process.env.PORT || 8000;
