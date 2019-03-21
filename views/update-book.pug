@@ -6,7 +6,7 @@ html
   body
     h1 Update Book
     -let id= books.id;
-    form(method='put',action="/books/"+ id) 
+    form(method='PUT',action="/books/"+ id) 
       p
         label(for='title') Title
         input#title(name='title', type='text', value=books.title)
