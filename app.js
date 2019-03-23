@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 const db = require("./config/database.js");
 const app = express();
 const Books = require("./models/Books");
-const methodOverride = require("method-override");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -17,8 +16,6 @@ app.set("view engine", "pug");
 
 app.use(express.static("public"));
 
-app.use(methodOverride("_method"));
-
 app.get("/", (req, res) => {
   res.redirect("/books");
 });
@@ -28,7 +25,7 @@ app.get("/books", (req, res) =>
     .then(books => {
       res.render("index", { books });
     })
-    .catch(err => console.log(err))
+    .catch(err => res.render("error"))
 );
 
 app.get("/books/new", (req, res) => res.render("new-book"));
@@ -42,27 +39,44 @@ app.post("/books/new", (req, res) => {
     genre,
     year
   })
-    .then(book => res.redirect("/books"))
-    .catch(err => console.log(err));
+    .then(() => res.redirect("/books"))
+    .catch(err =>
+      err.name === "SequelizeValidationError"
+        ? res.render("new-book-error", { errors: err.errors })
+        : res.send(err)
+    );
+  // .catch(err => res.render("error"));
 });
 
 //update book form
 app.get("/books/:id", (req, res) =>
   Books.findByPk(req.params.id)
-    .then(books => {
-      res.render("update-book", { books });
-    })
-    .catch(err => console.log(err))
+    .then(books =>
+      books
+        ? res.render("update-book", { books })
+        : res.render("page-not-found")
+    )
+    .catch(err => res.render("error"))
 );
 
 //perform update
-app.put("/books/:id", function(req, res, next) {
-  Books.findByPk(req.params.id).then(function(books) {
-    return books.update(req.body);
-  });
-  res.redirect("/books/");
-});
+app.post("/books/:id", (req, res) =>
+  Books.findByPk(req.params.id)
+    .then(books =>
+      books ? books.update(req.body) : res.render("page-not-found")
+    )
+    .then(() => res.redirect("/books"))
+    .catch(err => res.render("error"))
+);
 
-const PORT = process.env.PORT || 8000;
+//Delete Books
+app.post("/books/:id/delete", (req, res) =>
+  Books.findByPk(req.params.id)
+    .then(books => (books ? books.destroy() : res.render("page-not-found")))
+    .then(() => res.redirect("/books"))
+    .catch(err => res.render("error"))
+);
+
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, console.log(`Server started on port ${PORT}`));
