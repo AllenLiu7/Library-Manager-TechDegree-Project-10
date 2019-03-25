@@ -1,9 +1,6 @@
-doctype html
-html
-  head
-    title #{books.title}
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
+extends layout.pug
+
+block content
     h1 Update Book
     -let id= books.id;
     form(method='POST',action="/books/"+ id) 

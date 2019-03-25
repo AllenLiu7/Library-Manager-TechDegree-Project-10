@@ -1,9 +1,6 @@
-doctype html
-html
-  head  
-    title New Book
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
+extends layout.pug
+
+block content
     h1 New Book
     form(action='/books/new' method='POST')
       p
