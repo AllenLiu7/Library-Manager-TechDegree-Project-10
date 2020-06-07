@@ -1,4 +1,4 @@
-Library Manager
+##Library Manager
 
 This is a library manager using simple SQLite database. It includes pages to list, add, update and delete books. Technologies include Javascript, Nodejs, Express, Pug and SQL ORM Sequaelize.
 
