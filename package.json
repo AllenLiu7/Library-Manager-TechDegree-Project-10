@@ -19,7 +19,7 @@
   "homepage": "https://github.com/AllenLiu7/td-project-10#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "method-override": "^3.0.0",
     "pug": "^2.0.3",
     "sequelize": "^5.1.0",
